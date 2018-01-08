@@ -37,5 +37,4 @@ class TurtleProgram
 
 ostream& operator<< (ostream& out, const TurtleProgram& turtle);
 
-　
 #endif

@@ -7,6 +7,10 @@
 
 using namespace std;
 
+//git test
+#include<string>
+//git test
+
 int main()
 {
 	TurtleProgram tp1;
@@ -38,9 +42,7 @@ int main()
 	cout << "tp2 and tp3 are == to each other: " << (tp2 == tp3) << endl;*/
 	// need to write additional tests for += *=
 
-　
-　
-　
+
 	cin.get();
 
 	cout << "Done." << endl;
