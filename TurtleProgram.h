@@ -17,15 +17,20 @@ class TurtleProgram
 {
 	public:
 		TurtleProgram(string direction = "", string angleOrLength = "");
-		~TurtleProgram() { delete turtleArray; };
+		TurtleProgram(TurtleProgram& turtle);
+		~TurtleProgram() { delete[] turtleArray; };
 
+		//no checks have been added for out of bounds index reference
+		//use in main requires in bounds index references and proper string input
 		string getIndex(int index) const { return turtleArray[index]; };
 		int getLength() const { return length; };
-		void setIndex(int index);
+		void setIndex(int index, string action) { turtleArray[index] = action; };
 
 		bool operator==(TurtleProgram& turtle);
 		bool operator!=(TurtleProgram& turtle);
+
 		TurtleProgram operator=(TurtleProgram& turtle);
+
 		TurtleProgram operator+(TurtleProgram& turtle);
 		TurtleProgram operator+=(TurtleProgram& turtle);
 		TurtleProgram operator*(int multiplier);

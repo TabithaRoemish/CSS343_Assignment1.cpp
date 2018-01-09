@@ -7,6 +7,29 @@
 
 using namespace std;
 
+
+//constructor
+TurtleProgram::TurtleProgram(string direction, string angleOrLength)
+{
+	turtleArray = new string[CELL];
+	turtleArray[0] = direction;
+	turtleArray[1] = angleOrLength;
+	length = CELL; // beginning length of array - commands come in pairs (CELL = 2)
+}
+
+//copy constructor
+TurtleProgram::TurtleProgram(TurtleProgram& turtle)
+{
+	if (turtle != *this)
+	{
+		length = turtle.length;
+		turtleArray = new string[length];
+		for (int i = 0; i < length; i++)
+			turtleArray[i] = turtle.turtleArray[i];
+	}
+}
+
+//ostream overload (not a friend, defined out of class)
 ostream& operator<< (ostream& out, const TurtleProgram& turtle)
 {
 	for (int i = 0; i < turtle.getLength(); i++)
@@ -17,14 +40,7 @@ ostream& operator<< (ostream& out, const TurtleProgram& turtle)
 	return out;
 }
 
-TurtleProgram::TurtleProgram(string direction, string angleOrLength)
-{
-	turtleArray = new string[2];
-	turtleArray[0] = direction;
-	turtleArray[1] = angleOrLength;
-	length = CELL; // beginning length of array - commands come in pairs (CELL = 2)
-}
-
+//boolean comparisons
 bool TurtleProgram::operator==(TurtleProgram& turtle)
 {
 	string baseTurtle = "";
@@ -37,3 +53,29 @@ bool TurtleProgram::operator==(TurtleProgram& turtle)
 
 	return (baseTurtle == compareTurtle);
 }
+
+bool TurtleProgram::operator!=(TurtleProgram& turtle)
+{
+	bool answer = false;
+	if (turtle == *this)
+		answer = true;
+	return answer;
+}
+
+//assignment operator
+TurtleProgram TurtleProgram::operator=(TurtleProgram& turtle)
+{
+	if (turtle == *this)
+		return *this;
+	else
+	{
+		length = turtle.length;
+		delete[] turtleArray;
+		turtleArray = new string[length];
+		for (int i = 0; i < length; i++)
+			turtleArray[i] = turtle.turtleArray[i];
+	}
+	return *this;
+}
+
+//arithmetic overloads
