@@ -4,9 +4,7 @@
 
 #ifndef TURTLE_H
 #define TURTLE_H
-# define CELL 2 //each command is binary
-				// I will use this to increment size of array 
-				//since I'm not sure if sizeOf is allowed
+
 
 #include<string>
 #include <iostream>
@@ -17,7 +15,7 @@ class TurtleProgram
 {
 	public:
 		TurtleProgram(string direction = "", string angleOrLength = "");
-		TurtleProgram(TurtleProgram& turtle);
+		TurtleProgram(const TurtleProgram& turtle);
 		~TurtleProgram() { delete[] turtleArray; };
 
 		//no checks have been added for out of bounds index reference
@@ -25,9 +23,10 @@ class TurtleProgram
 		string getIndex(int index) const { return turtleArray[index]; };
 		int getLength() const { return length; };
 		void setIndex(int index, string action) { turtleArray[index] = action; };
+		void setLength(int lng) { length = lng; };
 
-		bool operator==(TurtleProgram& turtle);
-		bool operator!=(TurtleProgram& turtle);
+		bool operator==(const TurtleProgram& turtle) const;
+		bool operator!=(const TurtleProgram& turtle) const;
 
 		TurtleProgram operator=(TurtleProgram& turtle);
 
