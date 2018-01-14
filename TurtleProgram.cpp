@@ -7,24 +7,23 @@
 
 using namespace std;
 
-
 //constructor
 TurtleProgram::TurtleProgram(string direction, string angleOrLength)
 {
-	if(direction !=" " && angleOrLength != " ")
-	{
-	turtleArray = new string[2]; //beginning length of array - commands come in pairs
-	turtleArray[0] = direction;
-	turtleArray[1] = angleOrLength;
-	length = 2; // beginning length of array - commands come in pairs 
-	}
+	
+		turtleArray = new string[2]; //beginning length of array - commands come in pairs
+		turtleArray[0] = direction;
+		turtleArray[1] = angleOrLength;
+		length = 2; // beginning length of array - commands come in pairs
+
 }
 
 //copy constructor
 TurtleProgram::TurtleProgram(const TurtleProgram& turtle)
 {
-		length = turtle.length;
+		this->setLength(turtle.length);
 		turtleArray = new string[length];
+
 		for (int i = 0; i < length; i++)
 			turtleArray[i] = turtle.turtleArray[i];
 }
@@ -32,6 +31,7 @@ TurtleProgram::TurtleProgram(const TurtleProgram& turtle)
 //ostream overload (not a friend, defined out of class)
 ostream& operator<< (ostream& out, const TurtleProgram& turtle)
 {
+	
 	for (int i = 0; i < turtle.getLength(); i++)
 	{
 		out << turtle.getIndex(i);
@@ -63,15 +63,17 @@ bool TurtleProgram::operator!=(const TurtleProgram& turtle) const
 }
 
 //assignment operator
-TurtleProgram TurtleProgram::operator=(TurtleProgram& turtle)
+TurtleProgram& TurtleProgram::operator=(const TurtleProgram& turtle)
 {
-	if (turtle == *this)
+	
+	if (this == &turtle)
 		return *this;
 	else
 	{
-		length = turtle.length;
+		this->setLength(turtle.length);
 		delete[] turtleArray;
 		turtleArray = new string[length];
+		
 		for (int i = 0; i < length; i++)
 			turtleArray[i] = turtle.turtleArray[i];
 	}
@@ -80,12 +82,13 @@ TurtleProgram TurtleProgram::operator=(TurtleProgram& turtle)
 
 //arithmetic overloads
 
-TurtleProgram TurtleProgram::operator+(TurtleProgram& turtle)
+const TurtleProgram TurtleProgram::operator+(const TurtleProgram& turtle) const
 {
 	TurtleProgram answer;
 	int size = turtle.getLength() + this->getLength();
 	answer.setLength(size);
 	answer.turtleArray = new string[size];
+	
 	for (int i = 0; i < this->getLength(); i++)
 		answer.turtleArray[i] = this->turtleArray[i];
 	for (int m = 0; m < turtle.getLength(); m++)
@@ -95,17 +98,14 @@ TurtleProgram TurtleProgram::operator+(TurtleProgram& turtle)
 
 }
 
-TurtleProgram TurtleProgram::operator+=(TurtleProgram& turtle)
+TurtleProgram& TurtleProgram::operator+=(const TurtleProgram& turtle)
 {
 	return *this = *this + turtle;
 }
 
-TurtleProgram TurtleProgram::operator*(int multiplier)
+const TurtleProgram TurtleProgram::operator*(int multiplier) const
 {
 	TurtleProgram answer;
-	int index = 0;
-	answer.setLength(this->getLength() * multiplier);
-	answer.turtleArray = new string[answer.getLength()];
 
 	for (int x = 0; x < multiplier; x++)
 	{
@@ -115,8 +115,11 @@ TurtleProgram TurtleProgram::operator*(int multiplier)
 	return answer;
 }
 
-TurtleProgram TurtleProgram::operator*=(int multiplier)
+TurtleProgram& TurtleProgram::operator*=(int multiplier)
 {
-	return *this = *this * multiplier;
+	TurtleProgram answer;
+	answer = *this * multiplier;
+	*this = answer;
+	return *this;
 }
 

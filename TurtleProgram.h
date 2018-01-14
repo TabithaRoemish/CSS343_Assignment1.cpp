@@ -14,9 +14,10 @@ using namespace std;
 class TurtleProgram
 {
 	public:
-		TurtleProgram(string direction = "", string angleOrLength = "");
+		TurtleProgram() { length = 0; turtleArray = NULL;};
+		TurtleProgram(string direction, string angleOrLength);
 		TurtleProgram(const TurtleProgram& turtle);
-		~TurtleProgram() { delete[] turtleArray; };
+		~TurtleProgram() { delete[] turtleArray;};
 
 		//no checks have been added for out of bounds index reference
 		//use in main requires in bounds index references and proper string input
@@ -28,12 +29,14 @@ class TurtleProgram
 		bool operator==(const TurtleProgram& turtle) const;
 		bool operator!=(const TurtleProgram& turtle) const;
 
-		TurtleProgram operator=(TurtleProgram& turtle);
+		TurtleProgram& operator=(const TurtleProgram& turtle);
 
-		TurtleProgram operator+(TurtleProgram& turtle);
-		TurtleProgram operator+=(TurtleProgram& turtle);
-		TurtleProgram operator*(int multiplier);
-		TurtleProgram operator*=(int multiplier);
+		const TurtleProgram operator+(const TurtleProgram& turtle) const;
+		TurtleProgram& operator+=(const TurtleProgram& turtle);
+		const TurtleProgram operator*(int multiplier) const;
+		TurtleProgram& operator*=(int multiplier);
+
+		
 	private:
 		string* turtleArray;
 		int length;
